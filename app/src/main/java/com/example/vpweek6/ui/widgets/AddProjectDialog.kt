@@ -48,7 +48,7 @@ fun AddProjectDialog(
         containerColor = Color.White,
         title = {
             Column {
-                Text("Add Project", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Add Project", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                 Text("Komunitas: $communityName", fontSize = 12.sp, color = AppGray)
             }
         },
@@ -60,14 +60,14 @@ fun AddProjectDialog(
                 OutlinedTextField(
                     value = projectTitle,
                     onValueChange = onProjectTitleChange,
-                    label = { Text("Judul Proyek *") },
+                    label = { Text("Judul Proyek *", color = Color.Black) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = projectDescription,
                     onValueChange = onProjectDescriptionChange,
-                    label = { Text("Deskripsi Proyek (Minimal 3 Baris) *") },
+                    label = { Text("Deskripsi Proyek (Minimal 3 Baris) *", color = Color.Black) },
                     minLines = 3,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -76,7 +76,7 @@ fun AddProjectDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Tech Stack (Pilih Multi) *", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("Tech Stack (Pilih Multi) *", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                     Text("${selectedTechnologies.size} Dipilih", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = AppBlue)
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -110,12 +110,12 @@ fun AddProjectDialog(
                 enabled = isFormValid,
                 colors = ButtonDefaults.buttonColors(containerColor = AppBlue)
             ) {
-                Text("Save")
+                Text("Save", color = Color.Black)
             }
         },
         dismissButton = {
             TextButton(onClick = onCancel) {
-                Text("Cancel")
+                Text("Cancel", color = Color.Black)
             }
         }
     )

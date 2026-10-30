@@ -35,7 +35,7 @@ fun TopBar(topBarTitle: String, onBack: () -> Unit, subtitle: String = "") {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
             Column(modifier = Modifier.padding(start = 4.dp)) {
-                Text(topBarTitle, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text(topBarTitle, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                 if (subtitle.isNotEmpty()) {
                     Text(subtitle, fontSize = 11.sp, color = AppGray)
                 }

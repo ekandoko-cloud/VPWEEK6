@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -19,6 +20,7 @@ fun TechStackRow(technologyList: List<String>) {
             Text(
                 text = technology,
                 fontSize = 11.sp,
+                color = Color.Black,
                 modifier = Modifier
                     .background(AppLightGray, RoundedCornerShape(8.dp))
                     .padding(horizontal = 8.dp, vertical = 4.dp)
