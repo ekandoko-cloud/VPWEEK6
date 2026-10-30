@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Web
+import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -62,7 +64,8 @@ fun CommunityIconBox(communityId: String) {
         "ai" -> IconBox(Icons.Default.AutoAwesome, AppPurple, AppLightPurple)
         "mobile" -> IconBox(Icons.Default.PhoneAndroid, AppBlue, AppLightBlue)
         "data" -> IconBox(Icons.Default.BarChart, AppGreen, AppLightGreen)
-        else -> IconBox(Icons.Default.SportsEsports, AppOrange, AppLightYellow)
+        "network" -> IconBox(Icons.Default.Wifi, AppBlue, AppLightBlue)
+        else -> IconBox(Icons.Default.Web, AppPurple, AppLightPurple)
     }
 }
 

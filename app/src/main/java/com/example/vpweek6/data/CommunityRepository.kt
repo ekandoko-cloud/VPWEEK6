@@ -14,7 +14,7 @@ object CommunityRepository {
                 "Google Developer Student Club",
                 "Fokus pada ekosistem Google: Android Compose, Flutter, Firebase, dan Google Cloud Platform.",
                 142,
-                true
+                false
             ),
             Community(
                 "cyber",
@@ -22,7 +22,7 @@ object CommunityRepository {
                 "Security & Pentesting",
                 "Eksplorasi ethical hacking, CTF challenges, reverse engineering, dan pertahanan jaringan kampus.",
                 88,
-                true
+                false
             ),
             Community(
                 "ai",
@@ -38,21 +38,21 @@ object CommunityRepository {
                 "Jetpack Compose & KMP",
                 "Native Jetpack Compose dan iOS, serta Kotlin Multiplatform untuk aplikasi lintas platform.",
                 95,
-                true
+                false
             ),
             Community(
-                "data",
-                "Data Science Club",
-                "Data Analysis & Visualization",
-                "Belajar analisis data, visualisasi, dan statistik dengan Python.",
+                "network",
+                "Cisco Community",
+                "Networking & Security",
+                "Belajar tentang jaringan komputer, keamanan, dan solusi jaringan dari Cisco.",
                 70,
                 false
             ),
             Community(
-                "game",
-                "Game Dev Club",
-                "Unity & Game Design",
-                "Membuat game bersama, dari desain, pemrograman, sampai publikasi.",
+                "web",
+                "Web Development Community",
+                "Laravel and React JS",
+                "Membuat aplikasi web dengan Laravel dan React JS.",
                 64,
                 false
             )

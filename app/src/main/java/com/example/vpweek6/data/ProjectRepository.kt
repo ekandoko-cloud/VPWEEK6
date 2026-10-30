@@ -7,7 +7,35 @@ import kotlinx.coroutines.flow.asStateFlow
 
 object ProjectRepository {
     val techOptions =
-        listOf("Kotlin", "Jetpack Compose", "Firebase", "Ktor", "Room", "Python", "Google Maps SDK")
+        listOf(
+            "Kotlin",
+            "Jetpack Compose",
+            "Firebase",
+            "Ktor",
+            "Room",
+            "Python",
+            "Google Maps SDK",
+            "Java",
+            "PHP",
+            "Laravel",
+            "React JS",
+            "Unity",
+            "C#",
+            "Cisco Packet Tracer",
+            "Figma",
+            "Swift",
+            "Javascript",
+            "TypeScript",
+            "HTML",
+            "CSS",
+            "C++",
+            "C",
+            "Go",
+            "Rust",
+            "Dart",
+            "Flutter",
+            "SQL",
+        )
     private var nextId = 1
     private val _projects = MutableStateFlow(emptyList<Project>())
     val projects: StateFlow<List<Project>> = _projects.asStateFlow()
