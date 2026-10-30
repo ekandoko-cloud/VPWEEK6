@@ -52,7 +52,7 @@ fun ProjectDetailScreen(
         topBar = { TopBar(topBarTitle = "Project Detail", onBack = onBack) }
     ) { innerPadding ->
         if (selectedProject == null) {
-            Text("Proyek tidak ditemukan", modifier = Modifier
+            Text("Proyek tidak ditemukan", color = Color.Black, modifier = Modifier
                 .padding(innerPadding)
                 .padding(16.dp))
         } else {
@@ -97,7 +97,7 @@ fun ProjectDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Mark as Done", fontWeight = FontWeight.Bold)
+                                Text("Mark as Done", color = Color.Black, fontWeight = FontWeight.Bold)
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier.padding(top = 4.dp)
@@ -117,7 +117,7 @@ fun ProjectDetailScreen(
                 item {
                     Card(modifier = Modifier.fillMaxWidth(), colors = whiteCardColors()) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Deskripsi Lengkap Proyek", fontWeight = FontWeight.Bold)
+                            Text("Deskripsi Lengkap Proyek", color = Color.Black, fontWeight = FontWeight.Bold)
                             Text(
                                 selectedProject.description,
                                 fontSize = 12.sp,
@@ -131,7 +131,7 @@ fun ProjectDetailScreen(
                 item {
                     Card(modifier = Modifier.fillMaxWidth(), colors = whiteCardColors()) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Tech Stack Terpilih", fontWeight = FontWeight.Bold)
+                            Text("Tech Stack Terpilih", color = Color.Black, fontWeight = FontWeight.Bold)
                             Column(modifier = Modifier.padding(top = 8.dp)) {
                                 TechStackRow(selectedProject.technologyList)
                             }

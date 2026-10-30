@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,7 +74,8 @@ fun CommunitiesScreen(
                         Text(
                             "Communities Directory",
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
                         )
                         Text(
                             "Pilih komunitas untuk membuka Club Projects",
@@ -100,7 +102,7 @@ fun CommunitiesScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             CommunityIconBox(community.id)
                             Column(modifier = Modifier.padding(start = 12.dp)) {
-                                Text(community.name, fontWeight = FontWeight.Bold)
+                                Text(community.name, fontWeight = FontWeight.Bold, color = Color.Black)
                                 Text(
                                     "${community.subtitle} • ${community.memberCount} Mahasiswa",
                                     fontSize = 11.sp,
@@ -111,6 +113,7 @@ fun CommunitiesScreen(
                         Text(
                             community.description,
                             fontSize = 12.sp,
+                            color = Color.Black,
                             modifier = Modifier.padding(vertical = 10.dp)
                         )
                         HorizontalDivider()
@@ -150,7 +153,7 @@ fun CommunitiesScreen(
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp)
                                     )
-                                    Text("Joined", modifier = Modifier.padding(start = 4.dp))
+                                    Text("Joined", color = Color.Black, modifier = Modifier.padding(start = 4.dp))
                                 }
                             } else {
                                 Button(
@@ -163,7 +166,7 @@ fun CommunitiesScreen(
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp)
                                     )
-                                    Text("Join", modifier = Modifier.padding(start = 4.dp))
+                                    Text("Join", color = Color.Black, modifier = Modifier.padding(start = 4.dp))
                                 }
                             }
                         }
@@ -179,11 +182,11 @@ fun CommunitiesScreen(
                     .padding(16.dp),
                 action = {
                     TextButton(onClick = { campusViewModel.clearWarning() }) {
-                        Text("OK")
+                        Text("OK", color = Color.Black)
                     }
                 }
             ) {
-                Text(warningMessage ?: "")
+                Text(warningMessage ?: "", color = Color.Black)
             }
         }
     }

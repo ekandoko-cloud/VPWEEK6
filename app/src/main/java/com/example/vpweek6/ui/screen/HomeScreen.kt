@@ -74,7 +74,7 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("CampusTech Hub", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text("CampusTech Hub", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                     Text("Student Profile & Portfolio Dashboard", fontSize = 11.sp, color = AppGray)
                 }
                 Image(
@@ -155,27 +155,49 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                 Card(modifier = Modifier.weight(1f), colors = whiteCardColors()) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         IconBox(Icons.Default.Group, AppBlue, AppLightBlue)
-                        Text(
-                            joinedClubs.size.toString(),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                        Text("Joined Clubs", fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                        Text("Komunitas yang Diikuti", fontSize = 11.sp, color = AppGray)
+                        if (joinedClubs.isEmpty()) {
+                            Text(
+                                "Belum bergabung dengan komunitas",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        } else {
+                            Text(
+                                joinedClubs.size.toString(),
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                            Text("Joined Clubs", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                            Text("Komunitas yang Diikuti", fontSize = 11.sp, color = AppGray)
+                        }
                     }
                 }
                 Card(modifier = Modifier.weight(1f), colors = whiteCardColors()) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         IconBox(Icons.Default.ContentCopy, AppPurple, AppLightPurple)
-                        Text(
-                            projectList.size.toString(),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                        Text("Total Projects", fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                        Text("Seluruh Proyek Dibuat", fontSize = 11.sp, color = AppGray)
+                        if (projectList.isEmpty()) {
+                            Text(
+                                "Belum ada proyek yang dicatat",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        } else {
+                            Text(
+                                projectList.size.toString(),
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                            Text("Total Projects", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                            Text("Seluruh Proyek Dibuat", fontSize = 11.sp, color = AppGray)
+                        }
                     }
                 }
             }
@@ -201,6 +223,7 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                         "Semua Komunitas yang Diikuti (${joinedClubs.size})",
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
+                        color = Color.Black,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 }
@@ -226,7 +249,7 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                         Column(modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 12.dp)) {
-                            Text(club.name, fontWeight = FontWeight.Bold)
+                            Text(club.name, fontWeight = FontWeight.Bold, color = Color.Black)
                             Text(
                                 "${club.subtitle} • $projectCount Proyek",
                                 fontSize = 11.sp,
@@ -259,6 +282,7 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                         "Semua Proyek Mahasiswa (${projectList.size})",
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
+                        color = Color.Black,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 }
@@ -290,7 +314,7 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
                                 fontWeight = FontWeight.Bold,
                                 color = AppBlue
                             )
-                            Text(project.title, fontWeight = FontWeight.Bold)
+                            Text(project.title, fontWeight = FontWeight.Bold, color = Color.Black)
                             Text(
                                 project.technologyList.joinToString(" • "),
                                 fontSize = 11.sp,

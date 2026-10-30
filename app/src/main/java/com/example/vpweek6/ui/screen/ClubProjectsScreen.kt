@@ -77,7 +77,7 @@ fun ClubProjectsScreen(
                 containerColor = AppBlue,
                 contentColor = Color.White,
                 icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                text = { Text("Add Project") }
+                text = { Text("Add Project", color = Color.Black) }
             )
         }
     ) { innerPadding ->
@@ -120,7 +120,8 @@ fun ClubProjectsScreen(
                 Text(
                     "▢ Daftar Proyek Mahasiswa (${filteredProjects.size})",
                     fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
                 )
             }
 
@@ -138,7 +139,7 @@ fun ClubProjectsScreen(
                             Column(modifier = Modifier
                                 .weight(1f)
                                 .padding(horizontal = 12.dp)) {
-                                Text(project.title, fontWeight = FontWeight.Bold)
+                                Text(project.title, fontWeight = FontWeight.Bold, color = Color.Black)
                                 Text(
                                     project.description,
                                     fontSize = 11.sp,
