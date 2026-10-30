@@ -1,7 +1,9 @@
 package com.example.vpweek6.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,23 +14,43 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.CropSquare
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vpweek6.R
+import com.example.vpweek6.ui.widgets.AppBlue
+import com.example.vpweek6.ui.widgets.AppGray
+import com.example.vpweek6.ui.widgets.AppLightBlue
+import com.example.vpweek6.ui.widgets.AppLightPurple
+import com.example.vpweek6.ui.widgets.AppPurple
+import com.example.vpweek6.ui.widgets.CommunityIconBox
+import com.example.vpweek6.ui.widgets.IconBox
+import com.example.vpweek6.ui.widgets.JoinedBadge
+import com.example.vpweek6.ui.widgets.PageBackground
+import com.example.vpweek6.ui.widgets.StatusBadge
+import com.example.vpweek6.ui.widgets.whiteCardColors
 import com.example.vpweek6.viewmodel.CampusViewModel
 
 @Composable
@@ -36,153 +58,248 @@ fun HomeScreen(campusViewModel: CampusViewModel = viewModel()) {
     val communityList by campusViewModel.communities.collectAsStateWithLifecycle()
     val projectList by campusViewModel.projects.collectAsStateWithLifecycle()
     val student = campusViewModel.studentProfile
-    val joinedCommunities = communityList.filter { it.isJoined }
-    val joinedCommunityCount = joinedCommunities.size
-    val totalProjectCount = projectList.size
+    val joinedClubs = communityList.filter { it.isJoined }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(PageBackground),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text(
-                "CampusTech Hub",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Text("Student Profile & Portfolio Dashboard", style = MaterialTheme.typography.bodySmall)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text("CampusTech Hub", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text("Student Profile & Portfolio Dashboard", fontSize = 11.sp, color = AppGray)
+                }
+                Image(
+                    painter = painterResource(R.drawable.stevem),
+                    contentDescription = "Foto profil",
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
 
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent)
             ) {
                 Row(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            Brush.horizontalGradient(
+                                listOf(
+                                    Color(0xFF1E3FA8),
+                                    Color(0xFF3B82F6)
+                                )
+                            )
+                        )
+                        .padding(20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         painter = painterResource(R.drawable.stevem),
                         contentDescription = "Foto profil ${student.name}",
                         modifier = Modifier
-                            .size(56.dp)
+                            .size(64.dp)
                             .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                     Column(modifier = Modifier.padding(start = 16.dp)) {
                         Text(
                             "MAHASISWA AKTIF",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onPrimary
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier
+                                .background(
+                                    Color.White.copy(alpha = 0.25f),
+                                    RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 8.dp, vertical = 2.dp)
                         )
                         Text(
                             student.name,
-                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimary
+                            color = Color.White,
+                            modifier = Modifier.padding(top = 4.dp)
                         )
                         Text(
                             "${student.major} • Angkatan ${student.enrollmentYear}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimary
+                            fontSize = 12.sp,
+                            color = Color.White
                         )
-                        Text(
-                            "NIM: ${student.studentId}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
+                        Text("NIM: ${student.studentId}", fontSize = 12.sp, color = Color.White)
                     }
                 }
             }
         }
 
         item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Card(modifier = Modifier.weight(1f)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Card(modifier = Modifier.weight(1f), colors = whiteCardColors()) {
                     Column(modifier = Modifier.padding(16.dp)) {
+                        IconBox(Icons.Default.Group, AppBlue, AppLightBlue)
                         Text(
-                            joinedCommunityCount.toString(),
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
+                            joinedClubs.size.toString(),
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 8.dp)
                         )
-                        Text("Joined Clubs", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-                        Text("Komunitas yang Diikuti", style = MaterialTheme.typography.bodySmall)
+                        Text("Joined Clubs", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text("Komunitas yang Diikuti", fontSize = 11.sp, color = AppGray)
                     }
                 }
-                Card(modifier = Modifier.weight(1f)) {
+                Card(modifier = Modifier.weight(1f), colors = whiteCardColors()) {
                     Column(modifier = Modifier.padding(16.dp)) {
+                        IconBox(Icons.Default.ContentCopy, AppPurple, AppLightPurple)
                         Text(
-                            totalProjectCount.toString(),
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
+                            projectList.size.toString(),
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 8.dp)
                         )
-                        Text("Total Projects", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-                        Text("Seluruh Proyek Dibuat", style = MaterialTheme.typography.bodySmall)
+                        Text("Total Projects", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text("Seluruh Proyek Dibuat", fontSize = 11.sp, color = AppGray)
                     }
                 }
             }
         }
 
         item {
-            Text(
-                "Semua Komunitas yang Diikuti ($joinedCommunityCount)",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.Star,
+                        contentDescription = null,
+                        tint = AppBlue,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Text(
+                        "Semua Komunitas yang Diikuti (${joinedClubs.size})",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+                Text(
+                    "Status: Joined",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = AppBlue
+                )
+            }
         }
-        if (joinedCommunities.isEmpty()) {
-            item { Text("Belum bergabung dengan komunitas") }
+        if (joinedClubs.isEmpty()) {
+            item { Text("Belum bergabung dengan komunitas", color = AppGray) }
         } else {
-            items(joinedCommunities, key = { community -> community.id }) { community ->
-                val projectCount = projectList.count { it.communityId == community.id }
-                Card(modifier = Modifier.fillMaxWidth()) {
+            items(joinedClubs, key = { club -> club.id }) { club ->
+                val projectCount = projectList.count { it.communityId == club.id }
+                Card(modifier = Modifier.fillMaxWidth(), colors = whiteCardColors()) {
                     Row(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(14.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(community.name, fontWeight = FontWeight.Bold)
+                        CommunityIconBox(club.id)
+                        Column(modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 12.dp)) {
+                            Text(club.name, fontWeight = FontWeight.Bold)
                             Text(
-                                "${community.subtitle} • $projectCount Proyek",
-                                style = MaterialTheme.typography.bodySmall
+                                "${club.subtitle} • $projectCount Proyek",
+                                fontSize = 11.sp,
+                                color = AppGray
                             )
                         }
-                        Text("Joined ✓", color = MaterialTheme.colorScheme.error)
+                        JoinedBadge()
                     }
                 }
             }
         }
 
         item {
-            Text(
-                "Semua Proyek Mahasiswa ($totalProjectCount)",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.CropSquare,
+                        contentDescription = null,
+                        tint = AppPurple,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Text(
+                        "Semua Proyek Mahasiswa (${projectList.size})",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+                Text(
+                    "Total: ${projectList.size} Proyek",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = AppBlue
+                )
+            }
         }
         if (projectList.isEmpty()) {
-            item { Text("Belum ada proyek yang dicatat") }
+            item { Text("Belum ada proyek yang dicatat", color = AppGray) }
         } else {
             items(projectList, key = { project -> project.id }) { project ->
-                val communityName = communityList.find { it.id == project.communityId }?.name.orEmpty()
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            communityName,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Text(project.title, fontWeight = FontWeight.Bold)
-                        Text(
-                            project.technologyList.joinToString(" • "),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                        Text(
-                            if (project.isCompleted) "Completed" else "In Progress",
-                            style = MaterialTheme.typography.labelSmall
-                        )
+                val communityName = communityList.find { it.id == project.communityId }?.name ?: ""
+                Card(modifier = Modifier.fillMaxWidth(), colors = whiteCardColors()) {
+                    Row(
+                        modifier = Modifier.padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CommunityIconBox(project.communityId)
+                        Column(modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 12.dp)) {
+                            Text(
+                                communityName,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = AppBlue
+                            )
+                            Text(project.title, fontWeight = FontWeight.Bold)
+                            Text(
+                                project.technologyList.joinToString(" • "),
+                                fontSize = 11.sp,
+                                color = AppGray
+                            )
+                            Box(modifier = Modifier.padding(top = 6.dp)) {
+                                StatusBadge(project.isCompleted)
+                            }
+                        }
                     }
                 }
             }

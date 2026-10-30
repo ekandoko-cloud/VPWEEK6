@@ -3,36 +3,26 @@ package com.example.vpweek6.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.vpweek6.data.CommunityRepository
 import com.example.vpweek6.data.ProjectRepository
+import com.example.vpweek6.data.StudentRepository
 import com.example.vpweek6.model.Community
 import com.example.vpweek6.model.Project
-import com.example.vpweek6.model.Student
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class CampusViewModel : ViewModel() {
-    val studentProfile = Student(
-        name = "Ezekiel Reuben",
-        major = "Teknik Informatika",
-        enrollmentYear = 2022,
-        studentId = "22001045"
-    )
+    val studentProfile = StudentRepository.student
     val communities: StateFlow<List<Community>> = CommunityRepository.communities
     val projects: StateFlow<List<Project>> = ProjectRepository.projects
     val techOptions: List<String> = ProjectRepository.techOptions
-
     private val _isAddProjectDialogVisible = MutableStateFlow(false)
     val isAddProjectDialogVisible: StateFlow<Boolean> = _isAddProjectDialogVisible.asStateFlow()
-
     private val _projectTitleInput = MutableStateFlow("")
     val projectTitleInput: StateFlow<String> = _projectTitleInput.asStateFlow()
-
     private val _projectDescriptionInput = MutableStateFlow("")
     val projectDescriptionInput: StateFlow<String> = _projectDescriptionInput.asStateFlow()
-
     private val _selectedTechnologies = MutableStateFlow<Set<String>>(emptySet())
     val selectedTechnologies: StateFlow<Set<String>> = _selectedTechnologies.asStateFlow()
-
     private val _warningMessage = MutableStateFlow<String?>(null)
     val warningMessage: StateFlow<String?> = _warningMessage.asStateFlow()
 
@@ -40,10 +30,7 @@ class CampusViewModel : ViewModel() {
         CommunityRepository.toggleJoin(communityId)
     }
 
-    fun onCommunityClick(
-        community: Community,
-        onOpenCommunityProjects: (String) -> Unit
-    ) {
+    fun onCommunityClick(community: Community, onOpenCommunityProjects: (String) -> Unit) {
         if (community.isJoined) {
             onOpenCommunityProjects(community.id)
         } else {
@@ -75,30 +62,18 @@ class CampusViewModel : ViewModel() {
     }
 
     fun toggleTechnology(technology: String) {
-        val current = _selectedTechnologies.value.toMutableSet()
-        if (current.contains(technology)) {
-            current.remove(technology)
-        } else {
-            current.add(technology)
-        }
-        _selectedTechnologies.value = current
+        val current = _selectedTechnologies.value
+        _selectedTechnologies.value =
+            if (technology in current) current - technology else current + technology
     }
 
     fun saveProject(communityId: String) {
-        if (_projectTitleInput.value.isBlank() ||
-            _projectDescriptionInput.value.isBlank() ||
-            _selectedTechnologies.value.isEmpty()
-        ) {
-            return
-        }
-
-        val techList = techOptions.filter { it in _selectedTechnologies.value }
-        ProjectRepository.addProject(
-            communityId = communityId,
-            title = _projectTitleInput.value.trim(),
-            description = _projectDescriptionInput.value.trim(),
-            techStack = techList
-        )
+        val title = _projectTitleInput.value
+        val description = _projectDescriptionInput.value
+        val selected = _selectedTechnologies.value
+        if (title.isBlank() || description.isBlank() || selected.isEmpty()) return
+        val technologyList = techOptions.filter { it in selected }
+        ProjectRepository.addProject(communityId, title.trim(), description.trim(), technologyList)
         _isAddProjectDialogVisible.value = false
     }
 

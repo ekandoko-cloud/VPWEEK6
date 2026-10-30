@@ -6,10 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object ProjectRepository {
-    val techOptions = listOf(
-        "Kotlin", "Jetpack Compose", "Firebase", "Ktor",
-        "Room", "Python", "Google Maps SDK"
-    )
+    val techOptions =
+        listOf("Kotlin", "Jetpack Compose", "Firebase", "Ktor", "Room", "Python", "Google Maps SDK")
     private var nextId = 1
     private val _projects = MutableStateFlow(emptyList<Project>())
     val projects: StateFlow<List<Project>> = _projects.asStateFlow()
@@ -18,9 +16,9 @@ object ProjectRepository {
         communityId: String,
         title: String,
         description: String,
-        techStack: List<String>
+        technologyList: List<String>
     ) {
-        val project = Project("p$nextId", communityId, title, description, techStack)
+        val project = Project("p$nextId", communityId, title, description, technologyList)
         nextId++
         _projects.value += project
     }

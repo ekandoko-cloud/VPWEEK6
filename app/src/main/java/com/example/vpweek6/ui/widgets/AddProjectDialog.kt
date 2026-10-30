@@ -3,8 +3,6 @@ package com.example.vpweek6.ui.widgets
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,19 +11,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AddProjectDialog(
     communityName: String,
@@ -33,32 +33,23 @@ fun AddProjectDialog(
     projectTitle: String,
     projectDescription: String,
     selectedTechnologies: Set<String>,
-    isProjectFormValid: Boolean = projectTitle.isNotBlank() && projectDescription.isNotBlank() && selectedTechnologies.isNotEmpty(),
     onProjectTitleChange: (String) -> Unit,
     onProjectDescriptionChange: (String) -> Unit,
     onTechnologyToggle: (String) -> Unit,
     onSave: () -> Unit,
     onCancel: () -> Unit
 ) {
+    val isFormValid = projectTitle.isNotBlank() && projectDescription.isNotBlank() && selectedTechnologies.isNotEmpty()
+
     AlertDialog(
         onDismissRequest = {},
-        properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
-        ),
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
         shape = RoundedCornerShape(20.dp),
+        containerColor = Color.White,
         title = {
             Column {
-                Text(
-                    "Add Project",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    "Komunitas: $communityName",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Text("Add Project", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Komunitas: $communityName", fontSize = 12.sp, color = AppGray)
             }
         },
         text = {
@@ -71,7 +62,6 @@ fun AddProjectDialog(
                     onValueChange = onProjectTitleChange,
                     label = { Text("Judul Proyek *") },
                     singleLine = true,
-                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
@@ -79,7 +69,6 @@ fun AddProjectDialog(
                     onValueChange = onProjectDescriptionChange,
                     label = { Text("Deskripsi Proyek (Minimal 3 Baris) *") },
                     minLines = 3,
-                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Row(
@@ -87,44 +76,28 @@ fun AddProjectDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        "Tech Stack (Pilihan Multi-Selection) *",
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        "${selectedTechnologies.size} Dipilih",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text("Tech Stack (Pilih Multi) *", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("${selectedTechnologies.size} Dipilih", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = AppBlue)
                 }
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    for (technology in technologyOptions) {
-                        val isSelected = technology in selectedTechnologies
-                        Surface(
-                            onClick = { onTechnologyToggle(technology) },
-                            shape = RoundedCornerShape(16.dp),
-                            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
-                            border = BorderStroke(
-                                1.dp,
-                                if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
-                            )
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = if (isSelected) "✓  $technology" else "+  $technology",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
-                                )
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    for (rowItems in technologyOptions.chunked(2)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            for (technology in rowItems) {
+                                val isSelected = technology in selectedTechnologies
+                                Card(
+                                    onClick = { onTechnologyToggle(technology) },
+                                    shape = RoundedCornerShape(16.dp),
+                                    colors = CardDefaults.cardColors(containerColor = if (isSelected) AppLightBlue else Color.White),
+                                    border = BorderStroke(1.dp, if (isSelected) AppBlue else AppGray)
+                                ) {
+                                    Text(
+                                        text = if (isSelected) "✓  $technology" else "+  $technology",
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = if (isSelected) AppBlue else Color.Black,
+                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                                    )
+                                }
                             }
                         }
                     }
@@ -134,8 +107,8 @@ fun AddProjectDialog(
         confirmButton = {
             Button(
                 onClick = onSave,
-                enabled = isProjectFormValid,
-                shape = RoundedCornerShape(20.dp)
+                enabled = isFormValid,
+                colors = ButtonDefaults.buttonColors(containerColor = AppBlue)
             ) {
                 Text("Save")
             }
